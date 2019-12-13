@@ -6,22 +6,25 @@ import AddedFeatures from './components/AddedFeatures';
 import AdditionalFeatures from './components/AdditionalFeatures';
 import Total from './components/Total';
 
-import { addFeature } from './actions/actions';
+import { addFeature, removeFeature } from './actions/actions';
 
-const App = ({additionalFeatures, additionalPrice, car, addFeature}) => {
-  const removeFeature = item => {
+const App = ({additionalFeatures, additionalPrice, car, addFeature, removeFeature}) => {
+  const removedFeature = newFeature => {
     // dispatch an action here to remove an item
+    removeFeature(newFeature)
+    console.log(newFeature)
   };
 
   const buyItem = newFeature => {
       addFeature(newFeature)
-  };
+      // console.log(newFeature)
+    };
 
   return (
     <div className="boxes">
       <div className="box">
         <Header car={car} />
-        <AddedFeatures car={car} />
+        <AddedFeatures car={car} removedFeature={removedFeature} />
       </div>
       <div className="box">
         <AdditionalFeatures additionalFeatures={additionalFeatures} buyItem={buyItem}/>
@@ -39,5 +42,5 @@ const mapStateToProps = (state) => {
 
 export default connect (
   mapStateToProps, 
-  { addFeature }
+  { addFeature, removeFeature }
 )(App);
